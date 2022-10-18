@@ -25,6 +25,7 @@ import java.io.File;
 
 %{//adding Java code (methods, inner classes, ...)
    ArrayList<Symbol> listOfSymbols = new ArrayList<Symbol>();
+   int index = 0;
 %}
 
 %eof{//code to execute after scanning
@@ -50,32 +51,82 @@ Commentary2 = "%%"(.|"\n")*"%%"
 {Commentary1}  {}
 {Commentary2}  {}
 //Mots clés
-"BEGIN"        {System.out.println("token: "+ yytext() + "  lexical unit: BEGIN");listOfSymbols.add(new Symbol(LexicalUnit.BEGIN,yyline, yycolumn));}
-"ELSE"         {System.out.println("token: "+ yytext() + "  lexical unit: ELSE");listOfSymbols.add(new Symbol(LexicalUnit.ELSE,yyline, yycolumn));}
-"ENDIF"        {System.out.println("token: "+ yytext() + "  lexical unit: ENDIF");listOfSymbols.add(new Symbol(LexicalUnit.ENDIF,yyline, yycolumn));}
-"IF"           {System.out.println("token: "+ yytext() + "  lexical unit: IF");listOfSymbols.add(new Symbol(LexicalUnit.IF,yyline, yycolumn));}   
-"THEN"         {System.out.println("token: "+ yytext() + "  lexical unit: THEN");listOfSymbols.add(new Symbol(LexicalUnit.THEN,yyline, yycolumn));}
-"DO"           {System.out.println("token: "+ yytext() + "  lexical unit: DO");listOfSymbols.add(new Symbol(LexicalUnit.DO,yyline, yycolumn));}
-"END"          {System.out.println("token: "+ yytext() + "  lexical unit: END");listOfSymbols.add(new Symbol(LexicalUnit.END,yyline, yycolumn));}
-"WHILE"        {System.out.println("token: "+ yytext() + "  lexical unit: WHILE");listOfSymbols.add(new Symbol(LexicalUnit.WHILE,yyline, yycolumn));}
-"PRINT"        {System.out.println("token: "+ yytext() + "  lexical unit: PRINT");listOfSymbols.add(new Symbol(LexicalUnit.PRINT,yyline, yycolumn));}
-"READ"         {System.out.println("token: "+ yytext() + "  lexical unit: READ");listOfSymbols.add(new Symbol(LexicalUnit.READ,yyline, yycolumn));}
-"EOS"          {System.out.println("token: "+ yytext() + "  lexical unit: EOS");listOfSymbols.add(new Symbol(LexicalUnit.EOS,yyline, yycolumn));}
+"BEGIN"        {listOfSymbols.add(new Symbol(LexicalUnit.BEGIN,yyline, yycolumn,yytext()));
+                System.out.println(listOfSymbols.get(index).toString());
+                index += 1;}
+"ENDIF"        {listOfSymbols.add(new Symbol(LexicalUnit.ENDIF,yyline, yycolumn,yytext()));
+                System.out.println(listOfSymbols.get(index).toString());
+                index += 1;}
+"ELSE"         {listOfSymbols.add(new Symbol(LexicalUnit.ELSE,yyline, yycolumn,yytext()));
+                System.out.println(listOfSymbols.get(index).toString());
+                index += 1;}
+"IF"           {listOfSymbols.add(new Symbol(LexicalUnit.IF,yyline, yycolumn,yytext()));
+                System.out.println(listOfSymbols.get(index).toString());
+                index += 1;}
+"THEN"         {listOfSymbols.add(new Symbol(LexicalUnit.THEN,yyline, yycolumn,yytext()));
+                System.out.println(listOfSymbols.get(index).toString());
+                index += 1;}
+"DO"           {listOfSymbols.add(new Symbol(LexicalUnit.DO,yyline, yycolumn,yytext()));
+                System.out.println(listOfSymbols.get(index).toString());
+                index += 1;}
+"END"          {listOfSymbols.add(new Symbol(LexicalUnit.END,yyline, yycolumn,yytext()));
+                System.out.println(listOfSymbols.get(index).toString());
+                index += 1;}
+"WHILE"        {listOfSymbols.add(new Symbol(LexicalUnit.WHILE,yyline, yycolumn,yytext()));
+                System.out.println(listOfSymbols.get(index).toString());
+                index += 1;}
+"PRINT"        {listOfSymbols.add(new Symbol(LexicalUnit.PRINT,yyline, yycolumn,yytext()));
+                System.out.println(listOfSymbols.get(index).toString());
+                index += 1;}
+"READ"         {listOfSymbols.add(new Symbol(LexicalUnit.READ,yyline, yycolumn,yytext()));
+                System.out.println(listOfSymbols.get(index).toString());
+                index += 1;}
+"EOS"          {listOfSymbols.add(new Symbol(LexicalUnit.EOS,yyline, yycolumn,yytext()));
+                System.out.println(listOfSymbols.get(index).toString());
+                index += 1;}
 //Symbols et opérateurs
-"("            {System.out.println("token: "+ yytext() + "  lexical unit: LPAREN");listOfSymbols.add(new Symbol(LexicalUnit.LPAREN,yyline, yycolumn));}
-")"            {System.out.println("token: "+ yytext() + "  lexical unit: RPAREN");listOfSymbols.add(new Symbol(LexicalUnit.RPAREN,yyline, yycolumn));}
-"-"            {System.out.println("token: "+ yytext() + "  lexical unit: MINUS");listOfSymbols.add(new Symbol(LexicalUnit.MINUS,yyline, yycolumn));}
-"+"            {System.out.println("token: "+ yytext() + "  lexical unit: PLUS");listOfSymbols.add(new Symbol(LexicalUnit.PLUS,yyline, yycolumn));}
-"*"            {System.out.println("token: "+ yytext() + "  lexical unit: TIMES");listOfSymbols.add(new Symbol(LexicalUnit.TIMES,yyline, yycolumn));}
-"/"            {System.out.println("token: "+ yytext() + "  lexical unit: DIVIDE");listOfSymbols.add(new Symbol(LexicalUnit.DIVIDE,yyline, yycolumn));}
-"="            {System.out.println("token: "+ yytext() + "  lexical unit: EQUAL");listOfSymbols.add(new Symbol(LexicalUnit.EQUAL,yyline, yycolumn));}
-"<"            {System.out.println("token: "+ yytext() + "  lexical unit: SMALLER");listOfSymbols.add(new Symbol(LexicalUnit.SMALLER,yyline, yycolumn));}
-">"            {System.out.println("token: "+ yytext() + "  lexical unit: GREATER");listOfSymbols.add(new Symbol(LexicalUnit.GREATER,yyline, yycolumn));}
-":="           {System.out.println("token: "+ yytext() + "  lexical unit: ASSIGN");listOfSymbols.add(new Symbol(LexicalUnit.ASSIGN,yyline, yycolumn));}
-","            {System.out.println("token: "+ yytext() + "  lexical unit: COMMA");listOfSymbols.add(new Symbol(LexicalUnit.COMMA,yyline, yycolumn));}
+"("            {listOfSymbols.add(new Symbol(LexicalUnit.LPAREN,yyline, yycolumn,yytext()));
+                System.out.println(listOfSymbols.get(index).toString());
+                index += 1;}
+")"            {listOfSymbols.add(new Symbol(LexicalUnit.RPAREN,yyline, yycolumn,yytext()));
+                System.out.println(listOfSymbols.get(index).toString());
+                index += 1;}
+"-"            {listOfSymbols.add(new Symbol(LexicalUnit.MINUS,yyline, yycolumn,yytext()));
+                System.out.println(listOfSymbols.get(index).toString());
+                index += 1;}
+"+"            {listOfSymbols.add(new Symbol(LexicalUnit.PLUS,yyline, yycolumn,yytext()));
+                System.out.println(listOfSymbols.get(index).toString());
+                index += 1;}
+"*"            {listOfSymbols.add(new Symbol(LexicalUnit.TIMES,yyline, yycolumn,yytext()));
+                System.out.println(listOfSymbols.get(index).toString());
+                index += 1;}
+"/"            {listOfSymbols.add(new Symbol(LexicalUnit.DIVIDE,yyline, yycolumn,yytext()));
+                System.out.println(listOfSymbols.get(index).toString());
+                index += 1;}
+"="            {listOfSymbols.add(new Symbol(LexicalUnit.EQUAL,yyline, yycolumn,yytext()));
+                System.out.println(listOfSymbols.get(index).toString());
+                index += 1;}
+"<"            {listOfSymbols.add(new Symbol(LexicalUnit.SMALLER,yyline, yycolumn,yytext()));
+                System.out.println(listOfSymbols.get(index).toString());
+                index += 1;}
+">"            {listOfSymbols.add(new Symbol(LexicalUnit.GREATER,yyline, yycolumn,yytext()));
+                System.out.println(listOfSymbols.get(index).toString());
+                index += 1;}
+":="           {listOfSymbols.add(new Symbol(LexicalUnit.ASSIGN,yyline, yycolumn,yytext()));
+                System.out.println(listOfSymbols.get(index).toString());
+                index += 1;}
+","            {listOfSymbols.add(new Symbol(LexicalUnit.COMMA,yyline, yycolumn,yytext()));
+                System.out.println(listOfSymbols.get(index).toString());
+                index += 1;}
 //Expressions      
-{Progname}     {System.out.println("token: "+ yytext() + "  lexical unit: PROGNAME");listOfSymbols.add(new Symbol(LexicalUnit.PROGNAME,yyline, yycolumn));}
-{Varname}      {System.out.println("token: "+ yytext() + "  lexical unit: VARNAME");listOfSymbols.add(new Symbol(LexicalUnit.VARNAME,yyline, yycolumn));}
-{Number}       {System.out.println("token: "+ yytext() + "  lexical unit: NUMBER");listOfSymbols.add(new Symbol(LexicalUnit.NUMBER,yyline, yycolumn));}
+{Progname}     {listOfSymbols.add(new Symbol(LexicalUnit.PROGNAME,yyline, yycolumn,yytext()));
+                System.out.println(listOfSymbols.get(index).toString());
+                index += 1;}
+{Varname}      {listOfSymbols.add(new Symbol(LexicalUnit.VARNAME,yyline, yycolumn,yytext()));
+                System.out.println(listOfSymbols.get(index).toString());
+                index += 1;}
+{Number}       {listOfSymbols.add(new Symbol(LexicalUnit.NUMBER,yyline, yycolumn,yytext()));
+                System.out.println(listOfSymbols.get(index).toString());
+                index += 1;}
 .              {}
 
