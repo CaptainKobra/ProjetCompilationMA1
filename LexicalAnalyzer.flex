@@ -30,8 +30,9 @@ import java.io.File;
    int indexVariables = 0;
 %}//end adding Java code
 %eof{// called after scanning
+    System.out.println("Variables");
     for(int i=0; i < indexVariables; i++){
-    System.out.println( listOfVariables.get(i).getLine());}
+    System.out.println( listOfVariables.get(i).getValue().toString() + " "+ listOfVariables.get(i).getLine());}
 %eof}
 
 
