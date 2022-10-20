@@ -26,10 +26,14 @@ import java.io.File;
 %{//adding Java code (methods, inner classes, ...)
    ArrayList<Symbol> listOfSymbols = new ArrayList<Symbol>();
    int index = 0;
-%}
-
-%eof{//code to execute after scanning
+   ArrayList<Symbol> listOfVariables = new ArrayList<Symbol>();
+   int indexVariables = 0;
+%}//end adding Java code
+%eof{// called after scanning
+    for(int i=0; i < indexVariables; i++){
+    System.out.println( listOfVariables.get(i).getLine());}
 %eof}
+
 
 ////////////////////////////////
 //Extended Regular Expressions//
@@ -124,9 +128,13 @@ Commentary2 = "%%"(.|"\n")*"%%"
                 index += 1;}
 {Varname}      {listOfSymbols.add(new Symbol(LexicalUnit.VARNAME,yyline, yycolumn,yytext()));
                 System.out.println(listOfSymbols.get(index).toString());
-                index += 1;}
+                index += 1;
+		listOfVariables.add(new Symbol(LexicalUnit.VARNAME,yyline, yycolumn,yytext()));
+		indexVariables += 1;}
 {Number}       {listOfSymbols.add(new Symbol(LexicalUnit.NUMBER,yyline, yycolumn,yytext()));
                 System.out.println(listOfSymbols.get(index).toString());
                 index += 1;}
 .              {}
+
+
 
