@@ -28,9 +28,11 @@ import java.io.File;
    int index = 0;
    ArrayList<Symbol> listOfVariables = new ArrayList<Symbol>();
    int indexVariables = 0;
+   ArrayList<String> setOfVariables = new ArrayList<String> (); 
+
 %}//end adding Java code
 %eof{// called after scanning
-    System.out.println("Variables");
+    System.out.println( "\n" + "Variables");
     for(int i=0; i < indexVariables; i++){
     System.out.println( listOfVariables.get(i).getValue().toString() + " "+ listOfVariables.get(i).getLine());}
 %eof}
@@ -44,12 +46,14 @@ AlphaLowerCase = [a-z]
 Alpha          = {AlphaUpperCase}|{AlphaLowerCase}
 Number        = (([1-9][0-9]*)|0)
 Numeric        = [0-9]
+EndOfLine      = "\r"?"\n"
 
 AlphaLowerCaseNumeric   = {AlphaLowerCase}|{Numeric}
 Varname = {AlphaLowerCase}{AlphaLowerCaseNumeric}*
 Progname = {AlphaUpperCase}{Alpha}*{AlphaLowerCase}{Alpha}*
 Commentary1 = "::".*"\n"
 Commentary2 = "%%"(.|"\n")*"%%"
+
 %%//Identification of tokens and actions
 
 //Gestion des commentaires
@@ -130,11 +134,18 @@ Commentary2 = "%%"(.|"\n")*"%%"
 {Varname}      {listOfSymbols.add(new Symbol(LexicalUnit.VARNAME,yyline, yycolumn,yytext()));
                 System.out.println(listOfSymbols.get(index).toString());
                 index += 1;
-		listOfVariables.add(new Symbol(LexicalUnit.VARNAME,yyline, yycolumn,yytext()));
-		indexVariables += 1;}
+		if(setOfVariables.contains(yytext())){
+		}
+		else{
+			setOfVariables.add(yytext());
+			listOfVariables.add(new Symbol(LexicalUnit.VARNAME,yyline, yycolumn,yytext()));
+			System.out.println( listOfVariables.get(indexVariables).getValue().toString() + " "+ listOfVariables.get(indexVariables).getLine());
+			indexVariables += 1;
+		}}
 {Number}       {listOfSymbols.add(new Symbol(LexicalUnit.NUMBER,yyline, yycolumn,yytext()));
                 System.out.println(listOfSymbols.get(index).toString());
                 index += 1;}
+{EndOfLine}    {}
 .              {}
 
 
