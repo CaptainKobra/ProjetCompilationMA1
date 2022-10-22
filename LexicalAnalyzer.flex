@@ -41,18 +41,19 @@ import java.io.File;
 ////////////////////////////////
 //Extended Regular Expressions//
 ////////////////////////////////
+
 AlphaUpperCase = [A-Z]
 AlphaLowerCase = [a-z]
 Alpha          = {AlphaUpperCase}|{AlphaLowerCase}
 Number        = (([1-9][0-9]*)|0)
 Numeric        = [0-9]
-EndOfLine      = "\r"?"\n"
-
 AlphaLowerCaseNumeric   = {AlphaLowerCase}|{Numeric}
+
 Varname = {AlphaLowerCase}{AlphaLowerCaseNumeric}*
 Progname = {AlphaUpperCase}{Alpha}*{AlphaLowerCase}{Alpha}*
 Commentary1 = "::".*"\n"
 Commentary2 = "%%"(.|"\n")*"%%"
+EndOfLine      = "\r"?"\n"
 
 %%//Identification of tokens and actions
 
@@ -90,7 +91,7 @@ Commentary2 = "%%"(.|"\n")*"%%"
 "READ"         {listOfSymbols.add(new Symbol(LexicalUnit.READ,yyline, yycolumn,yytext()));
                 System.out.println(listOfSymbols.get(index).toString());
                 index += 1;}
-"EOS"          {listOfSymbols.add(new Symbol(LexicalUnit.EOS,yyline, yycolumn,yytext()));
+"\0"          {listOfSymbols.add(new Symbol(LexicalUnit.EOS,yyline, yycolumn,yytext()));
                 System.out.println(listOfSymbols.get(index).toString());
                 index += 1;}
 //Symbols et opérateurs
