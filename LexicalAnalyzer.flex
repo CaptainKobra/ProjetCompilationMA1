@@ -8,30 +8,25 @@ import java.io.File;
 %line				//Use line counter (yyline variable)
 %column			//Use character counter by line (yycolumn variable)
 
-//you can use either %cup or %standalone
-//   %standalone is for a Scanner which works alone and scan a file
-//   %cup is to interact with a CUP parser. In this case, you have to return
-//        a Symbol object (defined in the CUP library) for each action.
-//        Two constructors:
-//                          1. Symbol(int id,int line, int column)
-//                          2. Symbol(int id,int line, int column,Object value)
+
 %standalone
 
 ////////
 //CODE//
 ////////
-%init{//code to execute before scanning
+%init{
 %init}
 
-%{//adding Java code (methods, inner classes, ...)
+%{
    ArrayList<Symbol> listOfSymbols = new ArrayList<Symbol>();
-   int index = 0;
+   int indexSymbols = 0;
    ArrayList<Symbol> listOfVariables = new ArrayList<Symbol>();
    int indexVariables = 0;
-   ArrayList<String> setOfVariables = new ArrayList<String> (); 
+   ArrayList<String> variablesNames = new ArrayList<String> ();  
 
-%}//end adding Java code
-%eof{// called after scanning
+%}
+
+%eof{
     System.out.println( "\n" + "Variables");
     for(int i=0; i < indexVariables; i++){
     System.out.println( listOfVariables.get(i).getValue().toString() + " "+ listOfVariables.get(i).getLine());}
@@ -62,91 +57,88 @@ EndOfLine      = "\r"?"\n"
 {Commentary2}  {}
 //Mots clés
 "BEGIN"        {listOfSymbols.add(new Symbol(LexicalUnit.BEGIN,yyline, yycolumn,yytext()));
-                System.out.println(listOfSymbols.get(index).toString());
-                index += 1;}
+                System.out.println(listOfSymbols.get(indexSymbols).toString());
+                indexSymbols++;}
 "ENDIF"        {listOfSymbols.add(new Symbol(LexicalUnit.ENDIF,yyline, yycolumn,yytext()));
-                System.out.println(listOfSymbols.get(index).toString());
-                index += 1;}
+                System.out.println(listOfSymbols.get(indexSymbols).toString());
+                indexSymbols++;}
 "ELSE"         {listOfSymbols.add(new Symbol(LexicalUnit.ELSE,yyline, yycolumn,yytext()));
-                System.out.println(listOfSymbols.get(index).toString());
-                index += 1;}
+                System.out.println(listOfSymbols.get(indexSymbols).toString());
+                indexSymbols++;}
 "IF"           {listOfSymbols.add(new Symbol(LexicalUnit.IF,yyline, yycolumn,yytext()));
-                System.out.println(listOfSymbols.get(index).toString());
-                index += 1;}
+                System.out.println(listOfSymbols.get(indexSymbols).toString());
+                indexSymbols++;}
 "THEN"         {listOfSymbols.add(new Symbol(LexicalUnit.THEN,yyline, yycolumn,yytext()));
-                System.out.println(listOfSymbols.get(index).toString());
-                index += 1;}
+                System.out.println(listOfSymbols.get(indexSymbols).toString());
+                indexSymbols++;}
 "DO"           {listOfSymbols.add(new Symbol(LexicalUnit.DO,yyline, yycolumn,yytext()));
-                System.out.println(listOfSymbols.get(index).toString());
-                index += 1;}
+                System.out.println(listOfSymbols.get(indexSymbols).toString());
+                indexSymbols++;}
 "END"          {listOfSymbols.add(new Symbol(LexicalUnit.END,yyline, yycolumn,yytext()));
-                System.out.println(listOfSymbols.get(index).toString());
-                index += 1;}
+                System.out.println(listOfSymbols.get(indexSymbols).toString());
+                indexSymbols++;}
 "WHILE"        {listOfSymbols.add(new Symbol(LexicalUnit.WHILE,yyline, yycolumn,yytext()));
-                System.out.println(listOfSymbols.get(index).toString());
-                index += 1;}
+                System.out.println(listOfSymbols.get(indexSymbols).toString());
+                indexSymbols++;}
 "PRINT"        {listOfSymbols.add(new Symbol(LexicalUnit.PRINT,yyline, yycolumn,yytext()));
-                System.out.println(listOfSymbols.get(index).toString());
-                index += 1;}
+                System.out.println(listOfSymbols.get(indexSymbols).toString());
+                indexSymbols++;}
 "READ"         {listOfSymbols.add(new Symbol(LexicalUnit.READ,yyline, yycolumn,yytext()));
-                System.out.println(listOfSymbols.get(index).toString());
-                index += 1;}
-"\0"          {listOfSymbols.add(new Symbol(LexicalUnit.EOS,yyline, yycolumn,yytext()));
-                System.out.println(listOfSymbols.get(index).toString());
-                index += 1;}
+                System.out.println(listOfSymbols.get(indexSymbols).toString());
+                indexSymbols++;}
 //Symbols et opérateurs
 "("            {listOfSymbols.add(new Symbol(LexicalUnit.LPAREN,yyline, yycolumn,yytext()));
-                System.out.println(listOfSymbols.get(index).toString());
-                index += 1;}
+                System.out.println(listOfSymbols.get(indexSymbols).toString());
+                indexSymbols++;}
 ")"            {listOfSymbols.add(new Symbol(LexicalUnit.RPAREN,yyline, yycolumn,yytext()));
-                System.out.println(listOfSymbols.get(index).toString());
-                index += 1;}
+                System.out.println(listOfSymbols.get(indexSymbols).toString());
+                indexSymbols++;}
 "-"            {listOfSymbols.add(new Symbol(LexicalUnit.MINUS,yyline, yycolumn,yytext()));
-                System.out.println(listOfSymbols.get(index).toString());
-                index += 1;}
+                System.out.println(listOfSymbols.get(indexSymbols).toString());
+                indexSymbols++;}
 "+"            {listOfSymbols.add(new Symbol(LexicalUnit.PLUS,yyline, yycolumn,yytext()));
-                System.out.println(listOfSymbols.get(index).toString());
-                index += 1;}
+                System.out.println(listOfSymbols.get(indexSymbols).toString());
+                indexSymbols++;}
 "*"            {listOfSymbols.add(new Symbol(LexicalUnit.TIMES,yyline, yycolumn,yytext()));
-                System.out.println(listOfSymbols.get(index).toString());
-                index += 1;}
+                System.out.println(listOfSymbols.get(indexSymbols).toString());
+                indexSymbols++;}
 "/"            {listOfSymbols.add(new Symbol(LexicalUnit.DIVIDE,yyline, yycolumn,yytext()));
-                System.out.println(listOfSymbols.get(index).toString());
-                index += 1;}
+                System.out.println(listOfSymbols.get(indexSymbols).toString());
+                indexSymbols++;}
 "="            {listOfSymbols.add(new Symbol(LexicalUnit.EQUAL,yyline, yycolumn,yytext()));
-                System.out.println(listOfSymbols.get(index).toString());
-                index += 1;}
+                System.out.println(listOfSymbols.get(indexSymbols).toString());
+                indexSymbols++;}
 "<"            {listOfSymbols.add(new Symbol(LexicalUnit.SMALLER,yyline, yycolumn,yytext()));
-                System.out.println(listOfSymbols.get(index).toString());
-                index += 1;}
+                System.out.println(listOfSymbols.get(indexSymbols).toString());
+                indexSymbols++;}
 ">"            {listOfSymbols.add(new Symbol(LexicalUnit.GREATER,yyline, yycolumn,yytext()));
-                System.out.println(listOfSymbols.get(index).toString());
-                index += 1;}
+                System.out.println(listOfSymbols.get(indexSymbols).toString());
+                indexSymbols++;}
 ":="           {listOfSymbols.add(new Symbol(LexicalUnit.ASSIGN,yyline, yycolumn,yytext()));
-                System.out.println(listOfSymbols.get(index).toString());
-                index += 1;}
+                System.out.println(listOfSymbols.get(indexSymbols).toString());
+                indexSymbols++;}
 ","            {listOfSymbols.add(new Symbol(LexicalUnit.COMMA,yyline, yycolumn,yytext()));
-                System.out.println(listOfSymbols.get(index).toString());
-                index += 1;}
+                System.out.println(listOfSymbols.get(indexSymbols).toString());
+                indexSymbols++;}
 //Expressions      
 {Progname}     {listOfSymbols.add(new Symbol(LexicalUnit.PROGNAME,yyline, yycolumn,yytext()));
-                System.out.println(listOfSymbols.get(index).toString());
-                index += 1;}
+                System.out.println(listOfSymbols.get(indexSymbols).toString());
+                indexSymbols++;}
 {Varname}      {listOfSymbols.add(new Symbol(LexicalUnit.VARNAME,yyline, yycolumn,yytext()));
-                System.out.println(listOfSymbols.get(index).toString());
-                index += 1;
-		if(setOfVariables.contains(yytext())){
-		}
-		else{
-			setOfVariables.add(yytext());
-			listOfVariables.add(new Symbol(LexicalUnit.VARNAME,yyline, yycolumn,yytext()));
-			System.out.println( listOfVariables.get(indexVariables).getValue().toString() + " "+ listOfVariables.get(indexVariables).getLine());
-			indexVariables += 1;
-		}}
+                System.out.println(listOfSymbols.get(indexSymbols).toString());
+                indexSymbols++;
+                if(!(variablesNames.contains(yytext()))){
+                    variablesNames.add(yytext());
+                    listOfVariables.add(new Symbol(LexicalUnit.VARNAME,yyline, yycolumn,yytext()));
+                    indexVariables++;
+                    }}
 {Number}       {listOfSymbols.add(new Symbol(LexicalUnit.NUMBER,yyline, yycolumn,yytext()));
-                System.out.println(listOfSymbols.get(index).toString());
-                index += 1;}
+                System.out.println(listOfSymbols.get(indexSymbols).toString());
+                indexSymbols++;}
 {EndOfLine}    {}
+"\0"          {listOfSymbols.add(new Symbol(LexicalUnit.EOS,yyline, yycolumn,yytext()));
+                System.out.println(listOfSymbols.get(indexSymbols).toString());
+                indexSymbols++;}
 .              {}
 
 
