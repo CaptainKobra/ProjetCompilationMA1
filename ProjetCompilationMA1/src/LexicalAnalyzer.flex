@@ -23,7 +23,8 @@ import java.io.File;
    ArrayList<Symbol> listOfVariables = new ArrayList<Symbol>();
    int indexVariables = 0;
    ArrayList<String> variablesNames = new ArrayList<String> ();  
-
+   
+   return new Symbol(LexicalUnit.EOS, yyline, yycolumn);
 %}
 
 %eof{
@@ -136,7 +137,4 @@ EndOfLine      = "\r"?"\n"
                 System.out.println(listOfSymbols.get(indexSymbols).toString());
                 indexSymbols++;}
 {EndOfLine}    {}
-"\0"          {listOfSymbols.add(new Symbol(LexicalUnit.EOS,yyline, yycolumn,yytext()));
-                System.out.println(listOfSymbols.get(indexSymbols).toString());
-                indexSymbols++;}
 .              {}
