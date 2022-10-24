@@ -3,7 +3,7 @@ BEGIN Greaterthan
 %% %%
 
 READ(number3) ,              :: Read a number from user input
-res := number3 / 2 ,:: Read a number from user input
+res := number3 / 2 ,
 
 IF (res < 1 ) THEN
 	
@@ -11,5 +11,4 @@ IF (res < 1 ) THEN
 ELSE
 	PRINT(0),
 ENDIF ,
-serarien := "/0",
 END
