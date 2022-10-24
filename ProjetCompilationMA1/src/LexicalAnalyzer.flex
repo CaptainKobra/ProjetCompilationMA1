@@ -24,13 +24,14 @@ import java.io.File;
    int indexVariables = 0;
    ArrayList<String> variablesNames = new ArrayList<String> ();  
    
-   return new Symbol(LexicalUnit.EOS, yyline, yycolumn);
+
 %}
 
 %eof{
     System.out.println( "\n" + "Variables");
     for(int i=0; i < indexVariables; i++){
     System.out.println( listOfVariables.get(i).getValue().toString() + " "+ listOfVariables.get(i).getLine());}
+    return new Symbol(LexicalUnit.EOS, yyline, yycolumn);
 %eof}
 
 
